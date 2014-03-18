@@ -8,6 +8,38 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
+var sqlite3 = require('sqlite3');
+
+var db = new sqlite3.Database('./db/db.sqlite3', function() {
+    db.run("CREATE TABLE IF NOT EXISTS TestModel (info TEXT, col1 TEXT)");
+    db.close();
+
+    var bookshelfLib = require('bookshelf');
+    var bookshelf = bookshelfLib.initialize({
+        client: 'sqlite3',
+        connection: {
+            filename : './db/db.sqlite3'
+        }
+    });
+
+    var TestModel = bookshelf.Model.extend({
+        tableName: 'TestModel',
+
+        initialize: function() {
+        },
+
+        info: 'foo',
+        col1: 'text'
+    });
+
+    var test = new TestModel({
+        info: 'test',
+        col1: 'col1'
+    });
+//    test.set("telephone", "555-555-1212");
+    test.save();
+
+});
 
 var app = express();
 

@@ -1,5 +1,5 @@
 {
-  "name": "application-name",
+  "name": "ossdb",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -7,6 +7,9 @@
   },
   "dependencies": {
     "express": "3.4.8",
-    "jade": "*"
+    "jade": "*",
+    "knex": "0.5.8",
+    "bookshelf": "0.6.8",
+    "sqlite3": "2.2.0"
   }
 }

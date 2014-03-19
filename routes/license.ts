@@ -13,5 +13,3 @@ var sDb: mongodb.Db;
 export function set_db(aDb: mongodb.Db) {
     sDb = aDb;
 }
-
-export function

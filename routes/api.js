@@ -1,7 +1,6 @@
 /**
 * Created by sungwoo on 14. 3. 19.
 */
-var express = require("express");
 var async = require("async");
 
 var projects = require("./projects");

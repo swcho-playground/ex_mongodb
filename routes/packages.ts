@@ -15,7 +15,7 @@ export var model: libModel.CModel<api.TPackage>;
 
 export function init(aDb: mongodb.Db, aCb: (err: Error) => void) {
     model = new libModel.CModel<api.TPackage>(aDb, 'packages', {
-        name: {uniqueID: true},
+        name: {uniqueId: true},
         oss_id: null,
         license_id: null,
         project_ids: null

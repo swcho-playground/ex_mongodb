@@ -7,7 +7,7 @@ exports.model;
 
 function init(aDb, aCb) {
     exports.model = new libModel.CModel(aDb, 'projects', {
-        projectId: { uniqueID: true },
+        projectId: { uniqueId: true },
         package_ids: null
     }, aCb);
 }

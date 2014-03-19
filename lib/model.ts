@@ -38,10 +38,12 @@ export class CModel<T> {
                     }
                 }
             });
+            console.log(index);
             collection.ensureIndex(index, {
                 unique : true,
                 dropDups : true
             }, (err: Error, indexName: string) => {
+                console.log('Model: ' + aCollectionName + ' created: ' + err);
                 aCb(err);
             });
         });
@@ -51,6 +53,7 @@ export class CModel<T> {
         this._collection.insert(aItem, {
             safe: true
         }, (err: Error, result) => {
+            console.log('Model: added: ' + err);
             aCb(err);
         });
     }

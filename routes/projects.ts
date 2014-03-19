@@ -15,7 +15,7 @@ export var model: libModel.CModel<api.TProject>;
 
 export function init(aDb: mongodb.Db, aCb: (err: Error) => void) {
     model = new libModel.CModel<api.TProject>(aDb, 'projects', {
-        projectId: { uniqueID: true },
+        projectId: { uniqueId: true },
         package_ids: null
     }, aCb);
 }

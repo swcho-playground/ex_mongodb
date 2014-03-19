@@ -15,7 +15,7 @@ export var model: libModel.CModel<api.TOss>;
 
 export function init(aDb: mongodb.Db, aCb: (err: Error) => void) {
     model = new libModel.CModel<api.TOss>(aDb, 'oss', {
-        name: { uniqueID: true },
+        name: { uniqueId: true },
         projectUrl: null,
         package_ids: null
     }, aCb);

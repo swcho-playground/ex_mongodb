@@ -11,11 +11,11 @@ import express = require('express');
 import api = require("../api/ossdb.api");
 import libModel = require("../lib/model");
 
-export var model: libModel.CModel<api.TProject>;
+export var model: libModel.CModel<api.TLicense>;
 
 export function init(aDb: mongodb.Db, aCb: (err: Error) => void) {
-    model = new libModel.CModel<api.TProject>(aDb, 'projects', {
-        projectId: { uniqueID: true },
-        package_ids: null
+    model = new libModel.CModel<api.TLicense>(aDb, 'licenses', {
+        name: { uniqueID: true },
+        type: null
     }, aCb);
 }

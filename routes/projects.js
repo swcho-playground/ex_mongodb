@@ -1,21 +1,15 @@
 /**
 * Created by sungwoo on 14. 3. 19.
 */
-var sDb;
+var libModel = require("../lib/model");
 
-function set_db(aDb) {
-    sDb = aDb;
-}
-exports.set_db = set_db;
+exports.model;
 
-function add_project(aNewProject, aCb) {
-    sDb.collection('projects', function (err, collection) {
-        collection.insert(aNewProject, {
-            safe: true
-        }, function (err, result) {
-            console.log(result);
-        });
-    });
+function init(aDb, aCb) {
+    exports.model = new libModel.CModel(aDb, 'projects', {
+        projectId: { uniqueID: true },
+        package_ids: null
+    }, aCb);
 }
-exports.add_project = add_project;
+exports.init = init;
 //# sourceMappingURL=projects.js.map

@@ -1,23 +1,16 @@
 /**
 * Created by sungwoo on 14. 3. 19.
 */
-var sDb;
+var libModel = require("../lib/model");
 
-function set_db(aDb) {
-    sDb = aDb;
-}
-exports.set_db = set_db;
+exports.model;
 
-function index(aReq, res) {
-    res.send({});
+function init(aDb, aCb) {
+    exports.model = new libModel.CModel(aDb, 'oss', {
+        name: { uniqueID: true },
+        projectUrl: null,
+        package_ids: null
+    }, aCb);
 }
-exports.index = index;
-
-function getOss(aReq, res) {
-}
-exports.getOss = getOss;
-
-function addOss(aReq, res) {
-}
-exports.addOss = addOss;
+exports.init = init;
 //# sourceMappingURL=oss.js.map

@@ -6,13 +6,6 @@ var async = require("async");
 var projects = require("./projects");
 var packages = require("./packages");
 
-var sDb;
-
-function set_db(aDb) {
-    sDb = aDb;
-}
-exports.set_db = set_db;
-
 function SetProjectWithPackages(aReq, aRes) {
     var param = aReq.body;
     var resp = {
@@ -26,7 +19,7 @@ function SetProjectWithPackages(aReq, aRes) {
     var series = [];
     param.packageNames.forEach(function (packageName) {
         series.push(function (cb) {
-            packages.add_package({
+            packages.model.add({
                 name: packageName,
                 oss_id: null,
                 license_id: null,
@@ -37,7 +30,7 @@ function SetProjectWithPackages(aReq, aRes) {
         });
     });
     series.push(function (cb) {
-        projects.add_project({
+        projects.model.add({
             projectId: param.projectId,
             package_ids: null
         }, function (err) {

@@ -13,12 +13,6 @@ import api = require("../api/ossdb.api");
 import projects = require("./projects");
 import packages = require("./packages");
 
-var sDb: mongodb.Db;
-
-export function set_db(aDb: mongodb.Db) {
-    sDb = aDb;
-}
-
 export function SetProjectWithPackages(aReq: express.Request, aRes: express.Response) {
     var param: api.TSetProjectWithPackagesParam = aReq.body;
     var resp: api.TSetProjectWithPackagesResp = {
@@ -32,7 +26,7 @@ export function SetProjectWithPackages(aReq: express.Request, aRes: express.Resp
     var series = [];
     param.packageNames.forEach((packageName: string) => {
         series.push((cb) => {
-            packages.add_package({
+            packages.model.add({
                 name: packageName,
                 oss_id: null,
                 license_id: null,
@@ -43,7 +37,7 @@ export function SetProjectWithPackages(aReq: express.Request, aRes: express.Resp
         });
     });
     series.push((cb) => {
-        projects.add_project({
+        projects.model.add({
             projectId: param.projectId,
             package_ids: null
         }, (err: Error) => {

@@ -7,13 +7,16 @@
 ///<reference path='def/express.d.ts' />
 ///<reference path='def/node-sqlite3.d.ts' />
 ///<reference path='def/mongodb.d.ts' />
+///<reference path='def/async.d.ts' />
 
 import http = require('http');
 import path = require('path');
 import express = require('express');
 import mongodb = require('mongodb');
+import async = require('async');
 
 import index = require('./routes/index');
+import licenses = require('./routes/licenses');
 import oss = require('./routes/oss');
 import packages = require('./routes/packages');
 import projects = require('./routes/projects');
@@ -22,13 +25,33 @@ import api = require('./routes/api');
 var server = new mongodb.Server('localhost', 27017, {
     auto_reconnect: true
 });
-
 var db = new mongodb.Db('ossdb', server);
-db.open((error, db) => {
-    if (error) {
-        console.error('Connecting to "ossdb" database failed');
-        process.exit(1);
-    }
+
+var series = [];
+
+series.push((cb) => {
+    db.open((error, db) => {
+        if (error) {
+            console.error('Connecting to "ossdb" database failed');
+            process.exit(1);
+        }
+        cb();
+    });
+});
+
+series.push((cb) => {
+    licenses.init(db, cb);
+});
+series.push((cb) => {
+    oss.init(db, cb);
+});
+series.push((cb) => {
+    packages.init(db, cb);
+});
+series.push((cb) => {
+    projects.init(db, cb);
+});
+series.push((cb => {
     var app: express.Express = express();
     // all environments
     app.set('port', process.env.PORT || 3000);
@@ -47,10 +70,7 @@ db.open((error, db) => {
         app.use(express.errorHandler());
     }
 
-    oss.set_db(db);
-    packages.set_db(db);
-    projects.set_db(db);
-    api.set_db(db);
+
 
     // route
     app.get('/', index.index);
@@ -60,4 +80,5 @@ db.open((error, db) => {
     http.createServer(app).listen(app.get('port'), function(){
         console.log('Express server listening on port ' + app.get('port'));
     });
-});
+}));
+async.series(series);

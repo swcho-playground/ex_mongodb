@@ -9,21 +9,15 @@
 import mongodb = require('mongodb');
 import express = require('express');
 import api = require("../api/ossdb.api");
+import libModel = require("../lib/model");
 
-var sDb: mongodb.Db;
+export var model: libModel.CModel<api.TPackage>;
 
-export function set_db(aDb: mongodb.Db) {
-    sDb = aDb;
-}
-
-export function add_package(aNewPackage: api.TPackage, aCb: (err: Error) => void) {
-    sDb.collection('packages', (err: Error, collection: mongodb.Collection) => {
-        collection.insert(aNewPackage, {
-            safe: true
-        }, (err: Error, result) => {
-            console.log('package inserting for ' + aNewPackage.name);
-            console.log(result);
-            aCb(err);
-        });
-    });
+export function init(aDb: mongodb.Db, aCb: (err: Error) => void) {
+    model = new libModel.CModel<api.TPackage>(aDb, 'packages', {
+        name: {uniqueID: true},
+        oss_id: null,
+        license_id: null,
+        project_ids: null
+    }, aCb);
 }

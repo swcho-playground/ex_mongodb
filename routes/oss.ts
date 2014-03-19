@@ -4,26 +4,19 @@
 
 ///<reference path='../def/mongodb.d.ts' />
 ///<reference path='../def/express.d.ts' />
+///<reference path='../def/async.d.ts' />
 
 import mongodb = require('mongodb');
-import express = require("express");
+import express = require('express');
+import api = require("../api/ossdb.api");
+import libModel = require("../lib/model");
 
+export var model: libModel.CModel<api.TOss>;
 
-
-var sDb: mongodb.Db;
-
-export function set_db(aDb: mongodb.Db) {
-    sDb = aDb;
-}
-
-export function index(aReq: express.Request, res: express.Response) {
-    res.send({});
-}
-
-export function getOss(aReq: express.Request, res: express.Response) {
-
-}
-
-export function addOss(aReq: express.Request, res: express.Response) {
-
+export function init(aDb: mongodb.Db, aCb: (err: Error) => void) {
+    model = new libModel.CModel<api.TOss>(aDb, 'oss', {
+        name: { uniqueID: true },
+        projectUrl: null,
+        package_ids: null
+    }, aCb);
 }

@@ -12,6 +12,8 @@ var mongodb = require('mongodb');
 
 var index = require('./routes/index');
 var oss = require('./routes/oss');
+var packages = require('./routes/packages');
+var projects = require('./routes/projects');
 var api = require('./routes/api');
 
 var server = new mongodb.Server('localhost', 27017, {
@@ -44,6 +46,8 @@ db.open(function (error, db) {
     }
 
     oss.set_db(db);
+    packages.set_db(db);
+    projects.set_db(db);
     api.set_db(db);
 
     // route

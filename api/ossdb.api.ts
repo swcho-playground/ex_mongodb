@@ -12,7 +12,6 @@ var sHttpOptions = {
 };
 
 function post(aPath: string, aData: any, aCb: (aData) => void) {
-    console.log('post');
     var json = JSON.stringify(aData);
     var postHeaders = {
         'Content-Type': 'application/json'
@@ -24,21 +23,16 @@ function post(aPath: string, aData: any, aCb: (aData) => void) {
         method: 'POST',
         headers: postHeaders
     };
-    console.log('request');
     var req = http.request(options, (res: http.ClientResponse) => {
-        console.log('response');
         res.setEncoding('utf8');
         res.on('data', (data) => {
-            console.log('response data');
             console.log(data);
             aCb(JSON.parse(data));
         });
     });
-    console.log('write');
     req.write(json);
     req.end();
     req.on('error', (e) => {
-        console.log('error');
         console.error(e);
     })
 };
@@ -62,7 +56,7 @@ export interface TLicense {
 }
 
 export interface TProject {
-    id: string;
+    projectId: string;
     package_ids: string;
 }
 

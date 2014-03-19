@@ -15,6 +15,8 @@ import mongodb = require('mongodb');
 
 import index = require('./routes/index');
 import oss = require('./routes/oss');
+import packages = require('./routes/packages');
+import projects = require('./routes/projects');
 import api = require('./routes/api');
 
 var server = new mongodb.Server('localhost', 27017, {
@@ -46,6 +48,8 @@ db.open((error, db) => {
     }
 
     oss.set_db(db);
+    packages.set_db(db);
+    projects.set_db(db);
     api.set_db(db);
 
     // route
@@ -57,4 +61,3 @@ db.open((error, db) => {
         console.log('Express server listening on port ' + app.get('port'));
     });
 });
-

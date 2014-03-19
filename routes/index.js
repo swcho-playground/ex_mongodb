@@ -1,7 +1,7 @@
 /*
 * GET home page.
 */
-///<reference path='../defs/express.d.ts' />
+///<reference path='../def/express.d.ts' />
 var express = require("express");
 
 //import db = require("../db");

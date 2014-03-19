@@ -2,13 +2,27 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/test/test_api.js" />
+        <item url="file://$PROJECT_DIR$/routes/license.js" />
+        <item url="file://$PROJECT_DIR$/routes/api.js" />
+        <item url="file://$PROJECT_DIR$/routes/package.js" />
         <item url="file://$PROJECT_DIR$/routes/index.js" />
+        <item url="file://$PROJECT_DIR$/routes/project.js" />
         <item url="file://$PROJECT_DIR$/app.js" />
+        <item url="file://$PROJECT_DIR$/routes/oss.js" />
+        <item url="file://$PROJECT_DIR$/api/ossdb.api.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
+      <root url="file://$PROJECT_DIR$/routes/license.js" />
+      <root url="file://$PROJECT_DIR$/test/test_api.js" />
+      <root url="file://$PROJECT_DIR$/routes/api.js" />
+      <root url="file://$PROJECT_DIR$/routes/package.js" />
       <root url="file://$PROJECT_DIR$/routes/index.js" />
+      <root url="file://$PROJECT_DIR$/routes/project.js" />
+      <root url="file://$PROJECT_DIR$/routes/oss.js" />
       <root url="file://$PROJECT_DIR$/app.js" />
+      <root url="file://$PROJECT_DIR$/api/ossdb.api.js" />
     </CLASSES>
     <SOURCES />
   </library>

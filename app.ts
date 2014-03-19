@@ -1,17 +1,20 @@
+
 /**
-* Module dependencies.
-*/
+ * Module dependencies.
+ */
+
 ///<reference path='defs/node.d.ts' />
 ///<reference path='defs/express.d.ts' />
 ///<reference path='defs/node-sqlite3.d.ts' />
-var http = require('http');
-var path = require('path');
-var express = require('express');
+
+import http = require('http');
+import path = require('path');
+import express = require('express');
 
 var index = require('./routes/index');
 var user = require('./routes/user');
 
-var app = express();
+var app: express.Express = express();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -26,14 +29,13 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
-if ('development' == app.get('env')) {
+if ('development' == <any>app.get('env')) {
     app.use(express.errorHandler());
 }
 
 app.get('/', index.index);
 app.get('/users', user.list);
 
-http.createServer(app).listen(app.get('port'), function () {
+http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });
-//# sourceMappingURL=app.js.map

@@ -1,8 +1,13 @@
-
 /*
- * GET home page.
- */
+* GET home page.
+*/
+///<reference path='../defs/express.d.ts' />
+var express = require("express");
 
-exports.index = function(req, res){
-  res.render('index', { title: 'Express' });
-};
+//import db = require("../db");
+function index(aReq, res) {
+    res.render('index', { title: 'Express' });
+}
+exports.index = index;
+;
+//# sourceMappingURL=index.js.map

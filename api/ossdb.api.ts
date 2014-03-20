@@ -57,7 +57,7 @@ export interface TLicense {
 
 export interface TProject {
     projectId: string;
-    package_ids: string;
+    package_ids: string[];
 }
 
 export interface TSetProjectWithPackagesParam {

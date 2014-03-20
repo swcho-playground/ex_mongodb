@@ -15,7 +15,7 @@ export interface TSchema {
 }
 
 export interface FDefaultCb {
-    (err: Error): void;
+    (err: any): void;
 }
 
 export class CModel<T> {
@@ -23,6 +23,7 @@ export class CModel<T> {
     private _db: mongodb.Db;
     private _collection: mongodb.Collection;
     private _schema: TSchema;
+    private _uniqueIdKey: string;
 
     constructor(aDb: mongodb.Db, aCollectionName: string, aSchema: TSchema, aCb: FDefaultCb) {
         this._db = aDb;
@@ -35,26 +36,45 @@ export class CModel<T> {
                 if (attr) {
                     if (attr.uniqueId) {
                         index[key] = 1;
+                        this._uniqueIdKey = key;
                     }
                 }
             });
-            console.log(index);
             collection.ensureIndex(index, {
                 unique : true,
                 dropDups : true
             }, (err: Error, indexName: string) => {
-                console.log('Model: ' + aCollectionName + ' created: ' + err);
+                if (err) {
+                    console.error('Model: ' + aCollectionName + ' created: ' + err);
+                }
                 aCb(err);
             });
         });
     }
-
     add(aItem: T, aCb: FDefaultCb) {
         this._collection.insert(aItem, {
             safe: true
         }, (err: Error, result) => {
-            console.log('Model: added: ' + err);
+            if (err) {
+                console.log('Model: added: ' + err);
+            }
             aCb(err);
+        });
+    }
+    getById(aId: string, aCb: (err: any, result: T) => void) {
+        this._collection.find({ _id: aId }, (err: Error, result: mongodb.Cursor) => {
+            result.toArray((err: Error, results: any[]) => {
+                aCb(err, results ? results[0]: null);
+            });
+        });
+    }
+    getByUniqueId(aUniqueId: string, aCb: (err: any, result: T) => void) {
+        var query = {};
+        query[this._uniqueIdKey] = aUniqueId;
+        this._collection.find(query, (err: Error, result: mongodb.Cursor) => {
+            result.toArray((err: Error, results: any[]) => {
+                aCb(err, results ? results[0]: null);
+            });
         });
     }
 
